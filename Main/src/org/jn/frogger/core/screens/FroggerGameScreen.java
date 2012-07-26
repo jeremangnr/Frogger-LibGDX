@@ -6,6 +6,7 @@ import com.badlogic.gdx.graphics.GLCommon;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector3;
 import org.jn.frogger.core.FroggerGame;
+import org.jn.frogger.core.data.FroggerSoundCache;
 import org.jn.frogger.core.elements.FroggerControls;
 import org.jn.frogger.core.elements.FroggerPlayer;
 import org.jn.frogger.core.elements.FroggerTier;
@@ -164,18 +165,16 @@ public class FroggerGameScreen extends FroggerScreen {
             _tiers.get(i).update(dt);
         }
 
-        /* no collisions yet
-
         //check for collisions!
         if (_player.active) {
             //check collision of frog and tier sprites
             if (_tiers.get(_player.tierIndex).checkCollision(_player)) {
                 //if tiers with vehicles, and colliding with vehicle
                 if (_player.tierIndex < 6) {
-                    Sounds.play(Sounds.hit);
+                    FroggerSoundCache.play(FroggerSoundCache.hitSound);
                     //if not colliding with anything in the water tiers, drown frog
                 } else {
-                    Sounds.play(Sounds.splash);
+                    FroggerSoundCache.play(FroggerSoundCache.splashSound);
                 }
                 //kill player
                 _player.kill();
@@ -183,19 +182,17 @@ public class FroggerGameScreen extends FroggerScreen {
             }
             //check collision of frog and bonus frog
             //if bonus frog is visible and not on frog
-            if (_bonusFrog.visible) {
-                if (_bonusFrog.bounds().overlaps(_player.bounds())) {
-                    _player.hasBonus = true;
-                }
-            }
+            //if (_bonusFrog.visible) {
+            //    if (_bonusFrog.bounds().overlaps(_player.bounds())) {
+            //        _player.hasBonus = true;
+            //    }
+            //}
         } else {
             if (_player.hasBonus) {
-                _bonusFrog.visible = false;
+                //_bonusFrog.visible = false;
                 _player.hasBonus = false;
             }
         }
-
-        */
 
         //render all elements
         GLCommon gl = Gdx.gl;
