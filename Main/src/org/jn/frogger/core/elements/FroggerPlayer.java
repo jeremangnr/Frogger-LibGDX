@@ -261,12 +261,12 @@ public class FroggerPlayer extends FroggerMovingSprite implements FroggerAnimati
         _sprite.setRegion(_frogStand);
         _restFrame = _frogStand;
 
-        if (_game.gameData.lives >= 0) {
+        if (_game.gameData.lives > 0) {
             reset();
             _game.gameData.gameMode = FroggerGame.GAME_STATE_PLAY;
         } else {
             FroggerGameScreen screen = (FroggerGameScreen) _game.screen;
-            //screen.gameOver();
+            screen.gameOver();
         }
     }
 }

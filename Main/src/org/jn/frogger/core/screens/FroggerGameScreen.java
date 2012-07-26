@@ -7,10 +7,7 @@ import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector3;
 import org.jn.frogger.core.FroggerGame;
 import org.jn.frogger.core.data.FroggerSoundCache;
-import org.jn.frogger.core.elements.FroggerControls;
-import org.jn.frogger.core.elements.FroggerPlayer;
-import org.jn.frogger.core.elements.FroggerTier;
-import org.jn.frogger.core.elements.FroggerTimeBar;
+import org.jn.frogger.core.elements.*;
 import org.jn.frogger.core.sprites.FroggerGameSprite;
 
 import java.util.ArrayList;
@@ -34,7 +31,7 @@ public class FroggerGameScreen extends FroggerScreen {
     //private TimeMsg _levelTimeMsg;
     //private Score _score;
     //private Level _level;
-    //private FroggerLives _lives;
+    private FroggerLives _lives;
     private Vector3 _touchPoint;
     private Rectangle _controlBounds;
 
@@ -80,7 +77,7 @@ public class FroggerGameScreen extends FroggerScreen {
 
             //_score = new Score (_game, _game.screenWidth * 0.2f, _game.screenHeight - _game.screenHeight * 0.05f, "number_score_");
             //_level = new Level (_game, _game.screenWidth * 0.04f, _game.screenHeight - _game.screenHeight * 0.05f, "number_level_");
-            //_lives = new Lives (_game, _game.screenWidth * 0.68f, _game.screenHeight - _game.screenHeight * 0.06f);
+            _lives = new FroggerLives(_game, _game.screenWidth * 0.68f, _game.screenHeight - _game.screenHeight * 0.06f);
 
             _controls = new FroggerControls(_game, _game.screenWidth * 0.82f, _game.screenHeight - _game.screenHeight * 0.88f);
             _controlBounds = _controls.bounds();
@@ -104,16 +101,14 @@ public class FroggerGameScreen extends FroggerScreen {
             //_score.reset();
             //_level.reset();
             _game.gameData.reset();
-            //_lives.show();
+            _lives.show();
 
             for (int i = 0; i < _tiers.size(); i++) {
                 _tiers.get(i).reset();
             }
-
         }
 
         _game.gameData.gameMode = FroggerGame.GAME_STATE_PLAY;
-
     }
 
     @Override
@@ -123,7 +118,7 @@ public class FroggerGameScreen extends FroggerScreen {
         if (Gdx.input.justTouched()) {
             if (_gameOverMsg.visible) {
                 _gameOverMsg.visible = false;
-                _game.setScreen("MenuScreen");
+                _game.setScreen("FroggerMenuScreen");
             } else {
 
                 if (_game.gameData.gameMode == FroggerGame.GAME_STATE_PAUSE) return;
@@ -211,16 +206,18 @@ public class FroggerGameScreen extends FroggerScreen {
             if (!element.visible) continue;
 
             if (element.skin == null) {
-
                 element.draw();
-
             } else {
-
                 _game.spriteBatch.draw(element.skin, element.x, element.y);
-
             }
         }
         _game.spriteBatch.end();
 
     }
+
+    public void gameOver () {
+        _gameOverMsg.visible  = true;
+        _game.gameData.gameMode = FroggerGame.GAME_STATE_PAUSE;
+    }
+
 }
