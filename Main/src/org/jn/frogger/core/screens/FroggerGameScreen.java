@@ -28,9 +28,9 @@ public class FroggerGameScreen extends FroggerScreen {
     private FroggerTimeBar _timeBar;
     private FroggerGameSprite _gameOverMsg;
     private FroggerGameSprite _newLevelMsg;
-    //private TimeMsg _levelTimeMsg;
-    //private Score _score;
-    //private Level _level;
+    private FroggerTimeMsg _levelTimeMsg;
+    private FroggerScore _score;
+    private FroggerLevel _level;
     private FroggerLives _lives;
     private Vector3 _touchPoint;
     private Rectangle _controlBounds;
@@ -75,8 +75,8 @@ public class FroggerGameScreen extends FroggerScreen {
 
             _timeBar = new FroggerTimeBar(_game, _game.screenWidth * 0.18f, _game.screenHeight * 0.03f);
 
-            //_score = new Score (_game, _game.screenWidth * 0.2f, _game.screenHeight - _game.screenHeight * 0.05f, "number_score_");
-            //_level = new Level (_game, _game.screenWidth * 0.04f, _game.screenHeight - _game.screenHeight * 0.05f, "number_level_");
+            _score = new FroggerScore(_game, _game.screenWidth * 0.2f, _game.screenHeight - _game.screenHeight * 0.05f, "number_score_");
+            _level = new FroggerLevel(_game, _game.screenWidth * 0.04f, _game.screenHeight - _game.screenHeight * 0.05f, "number_level_");
             _lives = new FroggerLives(_game, _game.screenWidth * 0.68f, _game.screenHeight - _game.screenHeight * 0.06f);
 
             _controls = new FroggerControls(_game, _game.screenWidth * 0.82f, _game.screenHeight - _game.screenHeight * 0.88f);
@@ -90,16 +90,16 @@ public class FroggerGameScreen extends FroggerScreen {
             _newLevelMsg.visible = false;
             elements.add(_newLevelMsg);
 
-            //_levelTimeMsg = new TimeMsg(_game, _game.screenWidth * 0.5f, _game.screenHeight - _game.screenHeight * 0.53f);
-            //_levelTimeMsg.visible = false;
+            _levelTimeMsg = new FroggerTimeMsg(_game, _game.screenWidth * 0.5f, _game.screenHeight - _game.screenHeight * 0.53f);
+            _levelTimeMsg.visible = false;
 
         } else {
 
             _timeBar.reset();
             _player.reset();
             //_bonusFrog.reset();
-            //_score.reset();
-            //_level.reset();
+            _score.reset();
+            _level.reset();
             _game.gameData.reset();
             _lives.show();
 
@@ -114,7 +114,12 @@ public class FroggerGameScreen extends FroggerScreen {
     @Override
     public void update(float dt) {
 
-        //check for input
+        //
+        //
+        // check for input
+        //
+        //
+        //
         if (Gdx.input.justTouched()) {
             if (_gameOverMsg.visible) {
                 _gameOverMsg.visible = false;
@@ -148,7 +153,12 @@ public class FroggerGameScreen extends FroggerScreen {
             }
         }
 
-        //update elements!
+        //
+        //
+        // update elements!
+        //
+        //
+        //
         _player.update(dt);
         _player.place();
         //_bonusFrog.update(dt);
@@ -160,7 +170,12 @@ public class FroggerGameScreen extends FroggerScreen {
             _tiers.get(i).update(dt);
         }
 
-        //check for collisions!
+        //
+        //
+        // check for collisions!
+        //
+        //
+        //
         if (_player.active) {
             //check collision of frog and tier sprites
             if (_tiers.get(_player.tierIndex).checkCollision(_player)) {
@@ -189,7 +204,12 @@ public class FroggerGameScreen extends FroggerScreen {
             }
         }
 
-        //render all elements
+        //
+        //
+        // render all elements
+        //
+        //
+        //
         GLCommon gl = Gdx.gl;
         gl.glClearColor(0, 0, 0, 1);
         gl.glClear(GL10.GL_COLOR_BUFFER_BIT);
@@ -198,6 +218,7 @@ public class FroggerGameScreen extends FroggerScreen {
 
         _game.spriteBatch.setProjectionMatrix(_game.camera.combined);
         _game.spriteBatch.enableBlending();
+
         _game.spriteBatch.begin();
 
         for (int i = 0; i < elements.size(); i++) {
@@ -211,6 +232,7 @@ public class FroggerGameScreen extends FroggerScreen {
                 _game.spriteBatch.draw(element.skin, element.x, element.y);
             }
         }
+
         _game.spriteBatch.end();
 
     }

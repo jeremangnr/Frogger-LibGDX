@@ -221,6 +221,8 @@ public class FroggerPlayer extends FroggerMovingSprite implements FroggerAnimati
         y = nextY = _startPoint.y;
         _sprite.setPosition(x, y);
 
+        showMoveFrame(FroggerPlayer.MOVE_UP);
+
         tierIndex = 0;
         active = true;
         hasBonus = false;
@@ -241,7 +243,7 @@ public class FroggerPlayer extends FroggerMovingSprite implements FroggerAnimati
             }
 
         } else {
-            // make player go back to start if frog leaves screen while on water tier
+            // make player go back to start if frog leaves screen
             if (nextX < 0 || nextX > _game.screenWidth - width) {
                 FroggerSoundCache.play(FroggerSoundCache.outOfBoundsSound);
                 reset();

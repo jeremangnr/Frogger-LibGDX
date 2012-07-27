@@ -92,7 +92,7 @@ public class FroggerTier extends FroggerGameSprite {
         } else if (type == FroggerTier.TIER_TYPE_WATER) {
             //if no collision drown player
             if (!collision) return true;
-            //else, if collision, transfer tier speed to frog
+            //else, it means player is on top of log or turtle, so transfer tier speed to frog
             player.tierSpeed = speed;
         }
 

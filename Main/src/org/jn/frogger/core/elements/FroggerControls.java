@@ -26,7 +26,7 @@ public class FroggerControls extends FroggerGameSprite {
 
     }
 
-    public int getDirection (Vector3 p) {
+    public int getDirection(Vector3 p) {
 
         double diffX = p.x - _center.x;
         double diffY = p.y - _center.y;

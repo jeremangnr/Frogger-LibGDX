@@ -77,7 +77,7 @@ public class FroggerTimeBar extends FroggerGameSprite {
 
                     // show game over screen
                     FroggerGameScreen screen = (FroggerGameScreen) _game.screen;
-                    //screen.gameOver();
+                    screen.gameOver();
                 } else {
                     // else keep counting
                     _timeWidth -= _timeDecrement;
