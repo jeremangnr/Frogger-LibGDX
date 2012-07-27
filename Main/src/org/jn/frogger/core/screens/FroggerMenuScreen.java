@@ -1,6 +1,7 @@
 package org.jn.frogger.core.screens;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.GL10;
 import com.badlogic.gdx.graphics.GLCommon;
 import com.badlogic.gdx.graphics.g2d.SpriteCache;
@@ -63,8 +64,8 @@ public class FroggerMenuScreen extends FroggerScreen {
     public void update(float dt) {
 
         // check for touches
-        if (Gdx.input.justTouched()) {
-            Gdx.app.log("A HIT!", "We got a live one people!");
+        if (Gdx.input.justTouched() || Gdx.input.isKeyPressed(Input.Keys.ENTER)) {
+            Gdx.app.log("GO!", "Starting game");
             _game.setScreen("FroggerGameScreen");
         } else {
             GLCommon gl = Gdx.gl;

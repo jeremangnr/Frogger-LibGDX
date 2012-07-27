@@ -1,6 +1,7 @@
 package org.jn.frogger.core.screens;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.GL10;
 import com.badlogic.gdx.graphics.GLCommon;
 import com.badlogic.gdx.math.Rectangle;
@@ -122,6 +123,8 @@ public class FroggerGameScreen extends FroggerScreen {
         //
         //
         //
+
+        // check for touch/mouse
         if (Gdx.input.justTouched()) {
             if (_gameOverMsg.visible) {
                 _gameOverMsg.visible = false;
@@ -135,6 +138,7 @@ public class FroggerGameScreen extends FroggerScreen {
 
                     _game.camera.unproject(_touchPoint.set(Gdx.input.getX(), Gdx.input.getY(), 0));
 
+                    // handle touch/mouse input
                     if (_controlBounds.contains(_touchPoint.x, _touchPoint.y)) {
                         switch (_controls.getDirection(_touchPoint)) {
                             case FroggerPlayer.MOVE_UP:
@@ -153,6 +157,28 @@ public class FroggerGameScreen extends FroggerScreen {
                     }
                 }
             }
+        }
+
+        // check for keyboard
+        if (_gameOverMsg.visible) {
+
+            if (Gdx.input.isKeyPressed(Input.Keys.ENTER)) {
+                _gameOverMsg.visible = false;
+                _game.setScreen("FroggerMenuScreen");
+            }
+
+        } else {
+
+            if (Gdx.input.isKeyPressed(Input.Keys.DPAD_UP)) {
+                _player.moveFrogUp();
+            } else if (Gdx.input.isKeyPressed(Input.Keys.DPAD_DOWN)) {
+                _player.moveFrogDown();
+            }  else if (Gdx.input.isKeyPressed(Input.Keys.DPAD_LEFT)) {
+                _player.moveFrogLeft();
+            }  else if (Gdx.input.isKeyPressed(Input.Keys.DPAD_RIGHT)) {
+                _player.moveFrogRight();
+            }
+
         }
 
         //
