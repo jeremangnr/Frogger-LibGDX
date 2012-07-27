@@ -12,6 +12,8 @@ import org.jn.frogger.core.sprites.FroggerGameSprite;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
 
 /**
  * Created with IntelliJ IDEA.
@@ -58,7 +60,7 @@ public class FroggerGameScreen extends FroggerScreen {
                 _tiers.add(new FroggerTier(this._game, i));
             }
 
-            //_tiers.add(new FinalTier(_game, 12));
+            _tiers.add(new FroggerFinalTier(_game, 12));
 
             // add grass
             FroggerGameSprite grass = new FroggerGameSprite(_game, _game.screenWidth * 0.5f, _game.screenHeight - (_game.screenHeight * 0.12f), "grass");
@@ -240,6 +242,48 @@ public class FroggerGameScreen extends FroggerScreen {
     public void gameOver () {
         _gameOverMsg.visible  = true;
         _game.gameData.gameMode = FroggerGame.GAME_STATE_PAUSE;
+    }
+
+    public void targetReached() {
+
+        //show the time needed to reach this target
+        _levelTimeMsg.timeLabel.value = _timeBar.seconds;
+        _levelTimeMsg.show();
+
+        final Timer timer = new Timer();
+        // show msg for a while then hide
+        timer.schedule(new TimerTask() {
+            @Override
+            public void run() {
+                _levelTimeMsg.hide();
+                timer.cancel();
+            }
+        }, 3000, 1000);
+
+        _player.reset();
+        _timeBar.seconds = 0;
+
+    }
+
+    public void newLevel() {
+
+        // pause so we don't update screen
+        _game.gameData.gameMode = FroggerGame.GAME_STATE_PAUSE;
+
+        // increase tier speed for next level
+        _game.gameData.tierSpeed1 += 0.1f;
+        _game.gameData.tierSpeed2 += 0.2f;
+
+        // reset tiers
+        for (int i = 0; i < _tiers.size(); i++) {
+            _tiers.get(i).refresh();
+        }
+
+        // restart timebar
+        _timeBar.reset();
+
+        // go!
+        _game.gameData.gameMode = FroggerGame.GAME_STATE_PLAY;
     }
 
 }
